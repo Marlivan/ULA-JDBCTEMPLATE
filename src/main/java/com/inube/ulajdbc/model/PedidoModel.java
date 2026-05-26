@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 @Data
 public class PedidoModel {
-    private Integer idPedido;
-    private Integer idCliente;
+    private String idPedido;
+    private String idCliente;
     private LocalDateTime fechaPedido;
     private BigDecimal total;
     private String estadoPedido;

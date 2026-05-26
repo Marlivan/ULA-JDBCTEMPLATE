@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 
 @Data
 public class ProductoModel {
-    private Integer idProducto;
+    private String idProducto;
     private String nombre;
     private String descripcion;
     private BigDecimal precio;
     private Integer stock;
-    private Integer idCategoria;
+    private String idCategoria;
     private Integer estado;
 }

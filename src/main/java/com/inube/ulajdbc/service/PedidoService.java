@@ -21,7 +21,7 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     private final ProductoRepository productoRepository;
 
-    public Integer generarPedido(PedidoRequest request){
+    public String generarPedido(PedidoRequest request){
 
         BigDecimal total = BigDecimal.ZERO;
 
@@ -46,7 +46,7 @@ public class PedidoService {
             total = total.add(subtotal);
         }
 
-        Integer idPedido =
+        String idPedido =
                 pedidoRepository.guardarPedido(
                         request.getIdCliente(),
                         total);
@@ -81,26 +81,24 @@ public class PedidoService {
         return idPedido;
     }
 
-    public void cancelarPedido(Integer idPedido){
+    public void cancelarPedido(String idPedido){
 
         Integer existePedido =
                 pedidoRepository.existePedido(idPedido);
 
-        if(existePedido == 0){
+        if(existePedido == 0 ){
 
             throw new RuntimeException(
                     MSG18);
         }
 
         List<Map<String, Object>> detalles =
-                pedidoRepository.obtenerDetallesPedido(
-                        idPedido);
+                pedidoRepository.obtenerDetallesPedido(idPedido);
 
         for(Map<String, Object> detalle : detalles){
 
-            Integer idProducto =
-                    ((Number) detalle.get(MSG19))
-                            .intValue();
+            String idProducto =
+                    ((String) detalle.get(MSG19));
 
             Integer cantidad =
                     ((Number) detalle.get(MSG20))

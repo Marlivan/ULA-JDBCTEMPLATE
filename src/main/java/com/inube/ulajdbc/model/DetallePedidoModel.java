@@ -6,9 +6,9 @@ import java.math.BigDecimal;
 @Data
 public class DetallePedidoModel {
 
-    private Integer idDetalle;
-    private Integer idPedido;
-    private Integer idProducto;
+    private String idDetalle;
+    private String idPedido;
+    private String idProducto;
     private Integer cantidad;
     private BigDecimal precioUnitario;
     private BigDecimal subtotal;

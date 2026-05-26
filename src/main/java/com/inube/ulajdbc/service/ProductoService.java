@@ -20,19 +20,19 @@ public class ProductoService {
         return repository.listar();
     }
 
-    public ProductoModel buscarPorId(Integer id){
+    public ProductoModel buscarPorId(String id){
         return repository.buscarPorId(id);
     }
 
-    public void actualizar(Integer id, ProductoModel producto){
+    public void actualizar(String id, ProductoModel producto){
         repository.actualizar(id, producto);
     }
 
-    public void actualizarStock(Integer id, Integer stock){
+    public void actualizarStock(String id, Integer stock){
         repository.actualizarStock(id, stock);
     }
 
-    public void eliminar(Integer id){
+    public void eliminar(String id){
         repository.eliminar(id);
     }
 }

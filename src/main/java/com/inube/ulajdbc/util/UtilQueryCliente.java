@@ -2,8 +2,8 @@ package com.inube.ulajdbc.util;
 
 public class UtilQueryCliente {
     public static String SQUERY1 = """
-                INSERT INTO clientes( id_cliente, nombre, apellido, telefono, correo )
-                VALUES( seq_clientes.NEXTVAL,?,?,?,?)
+                INSERT INTO clientes( nombre, apellido, telefono, correo )
+                VALUES(?,?,?,?)
                 """;
 
     public static String SQUERY2 =  """

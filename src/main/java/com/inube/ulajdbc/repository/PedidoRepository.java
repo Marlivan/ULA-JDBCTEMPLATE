@@ -17,27 +17,32 @@ import static com.inube.ulajdbc.util.UtilQueryPedido.*;
 public class PedidoRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public Integer guardarPedido(Integer idCliente,
+    public String guardarPedido(String idCliente,
                                  BigDecimal total){
 
-        Integer idPedido = jdbcTemplate.queryForObject(
-                SQUERY1,
-                Integer.class
-        );
 
         String sql = SQUERY2;
 
         jdbcTemplate.update(sql,
-                idPedido,
                 idCliente,
                 total,
                 MSG1);
 
+        String sqlId = """
+            SELECT id_pedido FROM (
+                SELECT id_pedido FROM pedidos 
+                WHERE id_cliente = ?
+                ORDER BY fecha_pedido DESC
+            ) WHERE ROWNUM = 1
+            """;
+        String idPedido = jdbcTemplate.queryForObject(sqlId, String.class, idCliente);
+
         return idPedido;
+
     }
 
-    public void guardarDetalle(Integer idPedido,
-                               Integer idProducto,
+    public void guardarDetalle(String idPedido,
+                               String idProducto,
                                Integer cantidad,
                                BigDecimal precio,
                                BigDecimal subtotal){
@@ -52,7 +57,7 @@ public class PedidoRepository {
                 subtotal);
     }
 
-    public Integer existePedido(Integer idPedido){
+    public Integer existePedido(String idPedido){
 
         String sql = SQUERY4;
 
@@ -64,14 +69,14 @@ public class PedidoRepository {
     }
 
     public List<Map<String, Object>> obtenerDetallesPedido(
-            Integer idPedido){
+            String idPedido){
 
         String sql = SQUERY5;
 
         return jdbcTemplate.queryForList(sql, idPedido);
     }
 
-    public void cancelarPedido(Integer idPedido){
+    public void cancelarPedido(String idPedido){
 
         String sql = SQUERY6;
 

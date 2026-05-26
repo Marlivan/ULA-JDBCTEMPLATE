@@ -20,15 +20,15 @@ public class ClienteService {
         return repository.listar();
     }
 
-    public ClienteModel buscarPorId(Integer id){
+    public ClienteModel buscarPorId(String id){
         return repository.buscarPorId(id);
     }
 
-    public void actualizar(Integer id, ClienteModel cliente){
+    public void actualizar(String id, ClienteModel cliente){
         repository.actualizar(id, cliente);
     }
 
-    public void eliminar(Integer id){
+    public void eliminar(String id){
         repository.eliminar(id);
     }
 }

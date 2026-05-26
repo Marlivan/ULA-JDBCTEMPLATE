@@ -20,15 +20,15 @@ public class CategoriaService {
         return repository.listar();
     }
 
-    public CategoriaModel buscarPorId(Integer id){
+    public CategoriaModel buscarPorId(String id){
         return repository.buscarPorId(id);
     }
 
-    public void actualizar(Integer id, CategoriaModel categoria){
+    public void actualizar(String id, CategoriaModel categoria){
         repository.actualizar(id, categoria);
     }
 
-    public void eliminar(Integer id){
+    public void eliminar(String id){
         repository.eliminar(id);
     }
 }

@@ -13,13 +13,23 @@ import static com.inube.ulajdbc.util.UtilQueryCategoria.*;
 public class CategoriaRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public int guardar(CategoriaModel categoria){
+    public CategoriaModel guardar(CategoriaModel categoria){
 
         String sql = SQUERY1;
 
-        return jdbcTemplate.update(sql,
+         jdbcTemplate.update(sql,
                 categoria.getNombre(),
                 categoria.getDescripcion());
+
+         String sqlId= "SELECT id_categoria FROM categorias WHERE nombre = ?";
+         String idCatGenerada= jdbcTemplate.queryForObject(sqlId, String.class, categoria.getNombre());
+         categoria.setIdCategoria(idCatGenerada);
+
+         String sqlEstado = "SELECT estado FROM categorias WHERE nombre = ?";
+         Integer estadoGenerado= jdbcTemplate.queryForObject(sqlEstado, Integer.class, categoria.getNombre());
+         categoria.setEstado(estadoGenerado);
+        return categoria;
+
     }
 
     public List<CategoriaModel> listar(){
@@ -30,7 +40,7 @@ public class CategoriaRepository {
                 new BeanPropertyRowMapper<>(CategoriaModel.class));
     }
 
-    public CategoriaModel buscarPorId(Integer id){
+    public CategoriaModel buscarPorId(String id){
 
         String sql = SQUERY3;
 
@@ -39,7 +49,7 @@ public class CategoriaRepository {
                 id);
     }
 
-    public int actualizar(Integer id, CategoriaModel categoria){
+    public int actualizar(String id, CategoriaModel categoria){
 
         String sql = SQUERY4;
 
@@ -49,7 +59,7 @@ public class CategoriaRepository {
                 id);
     }
 
-    public int eliminar(Integer id){
+    public int eliminar(String id){
 
         String sql = SQUERY5;
 

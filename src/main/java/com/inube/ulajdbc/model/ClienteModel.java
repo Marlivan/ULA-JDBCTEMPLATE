@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ClienteModel {
-    private Integer idCliente;
+    private String idCliente;
     private String nombre;
     private String apellido;
     private String telefono;

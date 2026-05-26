@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import static com.inube.ulajdbc.util.UtilQueryCliente.*;
 
@@ -14,15 +17,28 @@ import static com.inube.ulajdbc.util.UtilQueryCliente.*;
 public class ClienteRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public int guardar(ClienteModel cliente){
+    public ClienteModel guardar(ClienteModel cliente){
 
         String sql = SQUERY1;
 
-        return jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
                 cliente.getNombre(),
                 cliente.getApellido(),
                 cliente.getTelefono(),
                 cliente.getCorreo());
+        String sqlId= "SELECT id_cliente FROM clientes WHERE nombre = ?";
+        String idGenerado= jdbcTemplate.queryForObject(sqlId, String.class, cliente.getNombre());
+        cliente.setIdCliente(idGenerado);
+
+        String sqlEstado= "SELECT estado FROM clientes WHERE nombre = ?";
+        Integer estadoGenerado = jdbcTemplate.queryForObject(sqlEstado, Integer.class, cliente.getNombre());
+        cliente.setEstado(estadoGenerado);
+
+        String sqlFechaRegistro= "SELECT fecha_registro FROM clientes WHERE nombre = ?";
+        LocalDateTime fechaGenerada= jdbcTemplate.queryForObject(sqlFechaRegistro, LocalDateTime.class, cliente.getNombre());
+        cliente.setFechaRegistro(fechaGenerada);
+
+        return cliente;
     }
 
     public List<ClienteModel> listar(){
@@ -33,7 +49,7 @@ public class ClienteRepository {
                 new BeanPropertyRowMapper<>(ClienteModel.class));
     }
 
-    public ClienteModel buscarPorId(Integer id){
+    public ClienteModel buscarPorId(String id){
 
         String sql = SQUERY3;
 
@@ -42,7 +58,7 @@ public class ClienteRepository {
                 id);
     }
 
-    public int actualizar(Integer id, ClienteModel cliente){
+    public int actualizar(String id, ClienteModel cliente){
 
         String sql = SQUERY4;
 
@@ -54,7 +70,7 @@ public class ClienteRepository {
                 id);
     }
 
-    public int eliminar(Integer id){
+    public int eliminar(String id){
 
         String sql = SQUERY5;
 

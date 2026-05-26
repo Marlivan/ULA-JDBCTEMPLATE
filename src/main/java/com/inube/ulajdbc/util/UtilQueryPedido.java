@@ -1,16 +1,17 @@
 package com.inube.ulajdbc.util;
 
 public class UtilQueryPedido {
-    public static String SQUERY1 = "SELECT seq_pedidos.NEXTVAL FROM dual";
+    //Ya no se usa
+   // public static String SQUERY1 = "SELECT seq_pedidos.NEXTVAL FROM dual";
 
     public static String SQUERY2 = """
-                INSERT INTO pedidos( id_pedido, id_cliente, total, estado_pedido )
-                VALUES( ?,?,?,? )
+                INSERT INTO pedidos(  id_cliente, total, estado_pedido )
+                VALUES( ?,?,? )
                 """;
 
     public static String SQUERY3 = """
-                INSERT INTO detalle_pedido( id_detalle, id_pedido, id_producto, cantidad, precio_unitario, subtotal )
-                VALUES( seq_detalle_pedido.NEXTVAL, ?,?,?,?,? )
+                INSERT INTO detalle_pedido(  id_pedido, id_producto, cantidad, precio_unitario, subtotal )
+                VALUES( ?,?,?,?,? )
                 """;
 
     public static String SQUERY4 = """

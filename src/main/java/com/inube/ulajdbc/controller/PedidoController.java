@@ -17,9 +17,10 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity<ApiResponse<?>> generarPedido(
+
             @RequestBody PedidoRequest request){
 
-        Integer idPedido =
+        String idPedido =
                 service.generarPedido(request);
 
         return ResponseEntity.ok(
@@ -33,7 +34,7 @@ public class PedidoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<?>> cancelarPedido(
-            @PathVariable Integer id){
+            @PathVariable String id){
 
         service.cancelarPedido(id);
 

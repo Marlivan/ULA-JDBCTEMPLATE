@@ -13,16 +13,25 @@ import static com.inube.ulajdbc.util.UtilQueryProducto.*;
 public class ProductoRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public int guardar(ProductoModel producto){
+    public ProductoModel guardar(ProductoModel producto){
 
         String sql = SQUERY1;
 
-        return jdbcTemplate.update(sql,
+         jdbcTemplate.update(sql,
                 producto.getNombre(),
                 producto.getDescripcion(),
                 producto.getPrecio(),
                 producto.getStock(),
                 producto.getIdCategoria());
+
+        String sqlEstado= "SELECT estado FROM productos WHERE nombre = ?";
+        Integer estadoGenerado = jdbcTemplate.queryForObject(sqlEstado, Integer.class, producto.getNombre());
+        producto.setEstado(estadoGenerado);
+
+        String sqlIdProducto ="SELECT id_producto from productos WHERE id_producto = ?";
+        String idProductoGenerado = jdbcTemplate.queryForObject(sqlIdProducto, String.class, producto.getIdProducto());
+        producto.setIdProducto(idProductoGenerado);
+        return producto;
     }
 
     public List<ProductoModel> listar(){
@@ -33,7 +42,7 @@ public class ProductoRepository {
                 new BeanPropertyRowMapper<>(ProductoModel.class));
     }
 
-    public ProductoModel buscarPorId(Integer id){
+    public ProductoModel buscarPorId(String id){
 
         String sql = SQUERY3;
 
@@ -42,7 +51,7 @@ public class ProductoRepository {
                 id);
     }
 
-    public int actualizar(Integer id, ProductoModel producto){
+    public int actualizar(String id, ProductoModel producto){
 
         String sql = SQUERY4;
 
@@ -55,7 +64,7 @@ public class ProductoRepository {
                 id);
     }
 
-    public int actualizarStock(Integer idProducto, Integer stock){
+    public int actualizarStock(String idProducto, Integer stock){
 
         String sql = SQUERY5;
 
@@ -64,7 +73,7 @@ public class ProductoRepository {
                 idProducto);
     }
 
-    public int eliminar(Integer id){
+    public int eliminar(String id){
 
         String sql = SQUERY6;
 
