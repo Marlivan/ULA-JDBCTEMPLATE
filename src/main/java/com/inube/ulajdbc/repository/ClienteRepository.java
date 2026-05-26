@@ -26,15 +26,15 @@ public class ClienteRepository {
                 cliente.getApellido(),
                 cliente.getTelefono(),
                 cliente.getCorreo());
-        String sqlId= "SELECT id_cliente FROM clientes WHERE nombre = ?";
+        String sqlId= "SELECT MAX(id_cliente) FROM clientes WHERE nombre = ?";
         String idGenerado= jdbcTemplate.queryForObject(sqlId, String.class, cliente.getNombre());
         cliente.setIdCliente(idGenerado);
 
-        String sqlEstado= "SELECT estado FROM clientes WHERE nombre = ?";
+        String sqlEstado= "SELECT MAX(estado) FROM clientes WHERE nombre = ?";
         Integer estadoGenerado = jdbcTemplate.queryForObject(sqlEstado, Integer.class, cliente.getNombre());
         cliente.setEstado(estadoGenerado);
 
-        String sqlFechaRegistro= "SELECT fecha_registro FROM clientes WHERE nombre = ?";
+        String sqlFechaRegistro= "SELECT MAX(fecha_registro) FROM clientes WHERE nombre = ?";
         LocalDateTime fechaGenerada= jdbcTemplate.queryForObject(sqlFechaRegistro, LocalDateTime.class, cliente.getNombre());
         cliente.setFechaRegistro(fechaGenerada);
 

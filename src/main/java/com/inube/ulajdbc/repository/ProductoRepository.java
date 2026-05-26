@@ -24,12 +24,12 @@ public class ProductoRepository {
                 producto.getStock(),
                 producto.getIdCategoria());
 
-        String sqlEstado= "SELECT estado FROM productos WHERE nombre = ?";
+        String sqlEstado= "SELECT MAX(estado) FROM productos WHERE nombre = ?";
         Integer estadoGenerado = jdbcTemplate.queryForObject(sqlEstado, Integer.class, producto.getNombre());
         producto.setEstado(estadoGenerado);
 
-        String sqlIdProducto ="SELECT id_producto from productos WHERE id_producto = ?";
-        String idProductoGenerado = jdbcTemplate.queryForObject(sqlIdProducto, String.class, producto.getIdProducto());
+        String sqlIdProducto ="SELECT MAX(id_producto) from productos WHERE nombre = ?";
+        String idProductoGenerado = jdbcTemplate.queryForObject(sqlIdProducto, String.class, producto.getNombre());
         producto.setIdProducto(idProductoGenerado);
         return producto;
     }

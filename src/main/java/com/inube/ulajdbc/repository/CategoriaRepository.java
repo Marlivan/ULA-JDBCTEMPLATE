@@ -21,11 +21,11 @@ public class CategoriaRepository {
                 categoria.getNombre(),
                 categoria.getDescripcion());
 
-         String sqlId= "SELECT id_categoria FROM categorias WHERE nombre = ?";
+         String sqlId= "SELECT MAX(id_categoria) FROM categorias WHERE nombre = ?";
          String idCatGenerada= jdbcTemplate.queryForObject(sqlId, String.class, categoria.getNombre());
          categoria.setIdCategoria(idCatGenerada);
 
-         String sqlEstado = "SELECT estado FROM categorias WHERE nombre = ?";
+         String sqlEstado = "SELECT MAX(estado) FROM categorias WHERE nombre = ?";
          Integer estadoGenerado= jdbcTemplate.queryForObject(sqlEstado, Integer.class, categoria.getNombre());
          categoria.setEstado(estadoGenerado);
         return categoria;
